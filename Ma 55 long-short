@@ -1,0 +1,39 @@
+// Set the lookback period for the moving average
+int lookback = 55;
+
+// Calculate the moving average
+double ma = MovingAverage(lookback);
+
+// Calculate the position size using the Kelly Criterion
+double positionSize = KellyCriterion(0.01, 0.05);
+
+// Set the stop-loss level at a certain percentage above the entry price
+double stopLoss = EntryPrice * (1 + 0.05);
+
+// Set the take-profit level at a certain percentage below the entry price
+double takeProfit = EntryPrice * (1 - 0.1);
+
+// If the price is above the moving average, go long
+if (Close > ma)
+{
+    // Enter a long position with the calculated position size
+    BuyAtMarket(positionSize);
+
+    // Set a stop-loss order at the calculated stop-loss level
+    SetStopLoss(stopLoss);
+
+    // Set a take-profit order at the calculated take-profit level
+    SetTakeProfit(takeProfit);
+}
+// If the price is below the moving average, go short
+else if (Close < ma)
+{
+    // Enter a short position with the calculated position size
+    SellAtMarket(positionSize);
+
+    // Set a stop-loss order at the calculated stop-loss level
+    SetStopLoss(stopLoss);
+
+    // Set a take-profit order at the calculated take-profit level
+    SetTakeProfit(takeProfit);
+}
